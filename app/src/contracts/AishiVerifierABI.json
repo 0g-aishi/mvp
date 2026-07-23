@@ -1,0 +1,86 @@
+{
+  "contractName": "AishiVerifier",
+  "address": "0x115E9121885EfFD77DB27Ddfc2d9103FeaA255c7",
+  "network": "galileo",
+  "chainId": 16601,
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "proofs",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "verifyPreimage",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "dataHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "isValid",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct PreimageProofOutput[]",
+          "name": "outputs",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bytes[]",
+          "name": "proofs",
+          "type": "bytes[]"
+        }
+      ],
+      "name": "verifyTransferValidity",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "oldDataHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "newDataHash",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes",
+              "name": "pubKey",
+              "type": "bytes"
+            },
+            {
+              "internalType": "bytes16",
+              "name": "sealedKey",
+              "type": "bytes16"
+            },
+            {
+              "internalType": "bool",
+              "name": "isValid",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct TransferValidityProofOutput[]",
+          "name": "outputs",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "deployedAt": "2025-08-13T18:42:19.602Z"
+}

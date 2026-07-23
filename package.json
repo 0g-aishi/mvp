@@ -1,0 +1,30 @@
+{
+  "name": "aishi",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Aishi iNFT companion — npm workspaces for app, compute backend, contracts, and docs",
+  "workspaces": [
+    "app",
+    "0g-compute",
+    "contracts",
+    "aishi-docs"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "predev": "node scripts/ensure-dev-env.js && node scripts/free-dev-ports.js",
+    "dev": "concurrently -n compute,app,browser -c cyan,magenta,green \"npm run dev:compute\" \"npm run dev:app\" \"node scripts/open-browser.js\"",
+    "dev:app": "npm run dev -w aishi-app",
+    "dev:compute": "npm run dev -w dreamscape-0g-compute",
+    "dev:docs": "npm run dev -w aishi-docs",
+    "compile": "npm run compile -w dreamscape-backend",
+    "deploy": "npm run deploy -w dreamscape-backend",
+    "rebuild:sqlite": "npm rebuild better-sqlite3 -w dreamscape-0g-compute"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  }
+}

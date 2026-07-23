@@ -1,0 +1,33 @@
+[
+  {
+    "id": 156,
+    "date": "2024-12-15",
+    "timestamp": 1702627200,
+    
+    // Podstawowe dane
+    "emotions": ["lęk", "ciekawość", "ulga"],
+    "symbols": ["woda", "most", "światło"],
+    "themes": ["transformacja", "przejście"],
+    "intensity": 7,
+    "lucidity": 3,
+    
+    // Archetypy i wzorce
+    "archetypes": ["hero_journey", "threshold"],
+    "recurring_from": [145, 151], // ID poprzednich snów
+    
+    // Analiza
+    "analysis": "Sen o przejściu przez most nad wzburzoną wodą symbolizuje transformację życiową. Światło na końcu mostu wskazuje pozytywny kierunek zmian.",
+    
+    // Wpływ na osobowość
+    "personality_impact": {
+      "dominant_trait": "resilience",
+      "shift_direction": "positive",
+      "intensity": 6
+    },
+    
+    // Metadane
+    "sleep_quality": 8,
+    "recall_clarity": 9,
+    "dream_type": "transformative" // nightmare, neutral, lucid, prophetic, transformative
+  }
+]

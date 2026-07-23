@@ -1,0 +1,104 @@
+{
+  "0g-mainnet": [
+    {
+      "id": "1758906341545",
+      "timestamp": "2025-09-26T17:05:41.545Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x14e54c132A82d6c5ac3723a47b2AE9002b9b78b8",
+        "AishiAgentCore": "0x15A4085Fd8818c08692e99dFFd2F7B061506eC16",
+        "AishiAgentPersonality": "0xF5538582086Cd6790bd9b55d3cf600BD3450A024",
+        "AishiAgentMemory": "0xb01CB9fC0e3BEf733127bD141A90e4217b3BFC9F",
+        "AishiAgent": "0xaf7ebF0a6a0e0b8781E3b3D989cc72c2d85BBCb6"
+      }
+    },
+    {
+      "id": "1758912820390",
+      "timestamp": "2025-09-26T18:53:40.390Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x65d1fcebC6d1bF4650f0260203f048e585A346D3",
+        "AishiAgentCore": "0xF1f9F11a36bB2C4CCF95ccA015ac0Be65544a171",
+        "AishiAgentPersonality": "0x3361f41634c37F96b6622ca8BB5Ca5B0DffAddCe",
+        "AishiAgentMemory": "0x6893cd3Af1C538576066104525f0Be9ACb240D49",
+        "AishiAgent": "0xE191ACEF27Eb78309Ce98b7CBC105d60f23C396c"
+      }
+    },
+    {
+      "id": "1758915972911",
+      "timestamp": "2025-09-26T19:46:12.911Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x7ac6C8543C6cB0CB388267E5a7a717Fc9872408f",
+        "AishiAgentCore": "0xF1f9F11a36bB2C4CCF95ccA015ac0Be65544a171",
+        "AishiAgentPersonality": "0x3361f41634c37F96b6622ca8BB5Ca5B0DffAddCe",
+        "AishiAgentMemory": "0x6893cd3Af1C538576066104525f0Be9ACb240D49",
+        "AishiAgent": "0x6878F1E6CB28e20759FDef8933809822F7C81f8a"
+      }
+    },
+    {
+      "id": "1761642020829",
+      "timestamp": "2025-10-28T09:00:20.829Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x8520A5e82a8e31268035d1F8485675c3F5F37ab5",
+        "AishiAgentCore": "0xF1f9F11a36bB2C4CCF95ccA015ac0Be65544a171",
+        "AishiAgentPersonality": "0x3361f41634c37F96b6622ca8BB5Ca5B0DffAddCe",
+        "AishiAgentMemory": "0x6893cd3Af1C538576066104525f0Be9ACb240D49",
+        "AishiAgent": "0x8eDB03ae1bF70D78455ea1b04c8700Bc56b87472"
+      }
+    },
+    {
+      "id": "1761818750801",
+      "timestamp": "2025-10-30T10:05:50.801Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x4386aa6bB6BB35985E00e7ee0703a64B4939d370",
+        "AishiAgent": "0x4b92d778171b235841D96e2a0d2C0f4434869038"
+      }
+    },
+    {
+      "id": "1761821113190",
+      "timestamp": "2025-10-30T10:45:13.190Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x232CA04565A7aAffff9b715D88562E48715e9185",
+      "contracts": {
+        "AishiVerifier": "0x8f317C6162c097f22b4d87E5f659Af4368Ef2e5E",
+        "AishiAgent": "0xBbDA343398Ba0e27eDf69C16088e4b460AB5E003"
+      }
+    },
+    {
+      "id": "1762079641944",
+      "timestamp": "2025-11-02T10:34:01.944Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x39ED0Fe39Cad2E9200f4cB1c765C83396A50218c",
+      "contracts": {
+        "AishiVerifier": "0xc08BeFb6278467173CAAfaC9ecE83b44aEB2C316",
+        "AishiAgent": "0xe0E21A851D47776094BEAF724D5442e9DBe017F9"
+      }
+    },
+    {
+      "id": "1762080379205",
+      "timestamp": "2025-11-02T10:46:19.205Z",
+      "network": "0G Mainnet",
+      "chainId": 16661,
+      "deployer": "0x39ED0Fe39Cad2E9200f4cB1c765C83396A50218c",
+      "contracts": {
+        "AishiVerifier": "0xD36e1AdFB81D8231fB2be005C2b0AeBFA8C892B9",
+        "AishiAgent": "0x67aC6AE80039AbB81F155313cB2002124Ac77A28"
+      }
+    }
+  ]
+}

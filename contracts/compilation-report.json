@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-11-02T15:05:55.745Z",
+  "network": "Mainnet",
+  "optimizer": {
+    "enabled": true,
+    "runs": 1
+  },
+  "contracts": [
+    {
+      "name": "AishiAgent",
+      "bytecodeSize": 25433,
+      "deployedSize": 24430,
+      "hasConstructor": true,
+      "isLibrary": false
+    },
+    {
+      "name": "AishiVerifier",
+      "bytecodeSize": 1572,
+      "deployedSize": 1544,
+      "hasConstructor": true,
+      "isLibrary": false
+    }
+  ],
+  "summary": {
+    "totalContracts": 2,
+    "mainContractSize": 24430
+  },
+  "compiler": {
+    "version": "0.8.20",
+    "settings": {
+      "viaIR": true
+    }
+  }
+}

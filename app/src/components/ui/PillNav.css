@@ -1,0 +1,96 @@
+.pill-nav {
+  --nav-h: 54px;
+  --pill-pad-x: 24px;
+  --pill-gap: 16px;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.pill-nav-items {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--nav-h);
+  background: var(--base, #000);
+  border-radius: 9999px;
+  padding: 3px;
+}
+
+.pill-list {
+  list-style: none;
+  display: flex;
+  align-items: stretch;
+  gap: var(--pill-gap);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.pill-list > li {
+  display: flex;
+  height: 100%;
+}
+
+.pill-shimmer-container {
+  position: relative;
+  height: 100%;
+}
+
+.pill-shimmer {
+  white-space: nowrap;
+}
+
+.pill-shimmer .label-stack {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.pill-shimmer .pill-label {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  will-change: transform, opacity;
+}
+
+.pill-shimmer .pill-label-hover {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #000000;
+  display: inline-block;
+  will-change: transform, opacity;
+  line-height: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pill-nav {
+    --nav-h: 38px;
+    --pill-pad-x: 14px;
+    --pill-gap: 12px;
+  }
+  
+  .pill-shimmer {
+    font-size: 14px !important;
+    height: 38px !important;
+    padding: 0 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .pill-nav {
+    --nav-h: 36px;
+    --pill-pad-x: 12px;
+    --pill-gap: 8px;
+  }
+  
+  .pill-shimmer {
+    font-size: 12px !important;
+    height: 36px !important;
+    padding: 0 12px !important;
+  }
+}

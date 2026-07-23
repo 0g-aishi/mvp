@@ -1,0 +1,42 @@
+[
+    {
+      "id": 234,
+      "date": "2024-12-15", 
+      "timestamp": 1702656000,
+      "duration": 15, // minuty
+      
+      // Podstawowe dane
+      "topic": "Interpretacja snu o moście",
+      "type": "dream_discussion", // general_chat, therapeutic, advice_seeking, dream_discussion
+      "emotional_tone": ["curious", "insightful"],
+      
+      // Kluczowe elementy
+      "key_insights": [
+        "Most jako symbol przejścia",
+        "Woda jako emocje do przepracowania",
+        "Światło jako nadzieja"
+      ],
+      
+      // Dynamika relacji
+      "relationship_depth": 8,
+      "breakthrough": false,
+      "vulnerability_level": 6,
+      
+      // Powiązania
+      "references": {
+        "dreams": [156],
+        "conversations": [230, 232],
+        "themes": ["transformacja"]
+      },
+      
+      // Podsumowanie
+      "summary": "Głęboka analiza snu o moście. Użytkownik rozpoznał związek z aktualną sytuacją życiową.",
+      
+      // Rozwój
+      "growth_markers": {
+        "self_awareness": 7,
+        "integration": 6,
+        "action_readiness": 8
+      }
+    }
+  ]

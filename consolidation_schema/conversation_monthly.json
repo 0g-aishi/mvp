@@ -1,0 +1,55 @@
+[
+    {
+      "month": 12,
+      "year": 2024,
+      "period": "December 2024", 
+      "total_conversations": 45,
+      
+      // Dominujące wzorce
+      "dominant": {
+        "topics": ["sny", "rozwój osobisty", "relacje"],
+        "types": ["dream_discussion", "therapeutic", "general_chat"],
+        "emotional_tones": ["reflective", "curious", "grateful"]
+      },
+      
+      // Statystyki
+      "metrics": {
+        "avg_duration": 18.5,
+        "avg_depth": 7.8,
+        "breakthrough_ratio": 0.12,
+        "follow_up_ratio": 0.65
+      },
+      
+      // Dynamika relacji
+      "relationship_evolution": {
+        "trust_level": 8.5,
+        "co_creation": 7.2,
+        "therapeutic_alliance": 8.8,
+        "communication_style": "collaborative"
+      },
+      
+      // Wzorce rozwoju
+      "growth_patterns": {
+        "primary_focus": "self_discovery",
+        "integration_level": "deep",
+        "action_orientation": "increasing"
+      },
+      
+      // Kluczowe momenty
+      "breakthrough_moments": [
+        "Połączenie snów z życiem codziennym",
+        "Przełom w rozumieniu relacji",
+        "Decyzja o zmianie kariery"
+      ],
+      
+      // Esencja miesiąca
+      "monthly_essence": "Grudniowe rozmowy charakteryzowała głęboka refleksja i integracja. Zwiększone zaufanie pozwoliło na eksplorację trudnych tematów.",
+      
+      // Korelacje ze snami
+      "dream_correlations": {
+        "theme_alignment": 0.82,
+        "emotional_sync": 0.75,
+        "integration_success": 0.88
+      }
+    }
+  ]

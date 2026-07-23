@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Recorder Test</title>
+  <style>
+    body {
+      font-family: -apple-system, system-ui, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #0a0a0a;
+      color: #f0f0f0;
+    }
+    .container {
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+    }
+    h1 {
+      color: #8B5CF6;
+      margin-bottom: 30px;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: #8B5CF6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    button:hover:not(:disabled) {
+      background: #7C3AED;
+      transform: translateY(-1px);
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    button.recording {
+      background: #EF4444;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    .status {
+      padding: 15px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+    .status p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .status .label {
+      color: #8B5CF6;
+      font-weight: 600;
+    }
+    audio {
+      width: 100%;
+      margin-top: 20px;
+    }
+    .error {
+      color: #EF4444;
+      padding: 10px;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .waveform {
+      height: 60px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 8px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+    .waveform.active .bar {
+      animation: wave 0.5s infinite alternate;
+    }
+    .bar {
+      width: 4px;
+      height: 20px;
+      background: #8B5CF6;
+      border-radius: 2px;
+    }
+    .bar:nth-child(2) { animation-delay: 0.1s; height: 30px; }
+    .bar:nth-child(3) { animation-delay: 0.2s; height: 25px; }
+    .bar:nth-child(4) { animation-delay: 0.3s; height: 35px; }
+    .bar:nth-child(5) { animation-delay: 0.4s; height: 28px; }
+    .bar:nth-child(6) { animation-delay: 0.5s; height: 32px; }
+    .bar:nth-child(7) { animation-delay: 0.6s; height: 24px; }
+    @keyframes wave {
+      to { transform: scaleY(1.5); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎤 Audio Recorder Test</h1>
+
+    <div class="status">
+      <p><span class="label">Status:</span> <span id="status">Ready</span></p>
+      <p><span class="label">Duration:</span> <span id="duration">0</span>s</p>
+      <p><span class="label">Format:</span> <span id="format">-</span></p>
+      <p><span class="label">Size:</span> <span id="size">-</span></p>
+      <p><span class="label">Permission:</span> <span id="permission">Pending</span></p>
+    </div>
+
+    <div class="waveform" id="waveform">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn">🔴 Start Recording</button>
+      <button id="stopBtn" disabled>⏹ Stop</button>
+      <button id="pauseBtn" disabled>⏸ Pause</button>
+      <button id="clearBtn" disabled>🗑️ Clear</button>
+    </div>
+
+    <audio id="audioPlayer" controls style="display: none;"></audio>
+    <div id="error" class="error" style="display: none;"></div>
+  </div>
+
+  <script>
+    class AudioRecorder {
+      constructor() {
+        this.mediaRecorder = null;
+        this.stream = null;
+        this.chunks = [];
+        this.startTime = 0;
+        this.duration = 0;
+        this.durationInterval = null;
+        this.audioBlob = null;
+
+        this.initElements();
+        this.bindEvents();
+        this.checkPermission();
+      }
+
+      initElements() {
+        this.startBtn = document.getElementById('startBtn');
+        this.stopBtn = document.getElementById('stopBtn');
+        this.pauseBtn = document.getElementById('pauseBtn');
+        this.clearBtn = document.getElementById('clearBtn');
+        this.audioPlayer = document.getElementById('audioPlayer');
+        this.statusEl = document.getElementById('status');
+        this.durationEl = document.getElementById('duration');
+        this.formatEl = document.getElementById('format');
+        this.sizeEl = document.getElementById('size');
+        this.permissionEl = document.getElementById('permission');
+        this.errorEl = document.getElementById('error');
+        this.waveformEl = document.getElementById('waveform');
+      }
+
+      bindEvents() {
+        this.startBtn.addEventListener('click', () => this.startRecording());
+        this.stopBtn.addEventListener('click', () => this.stopRecording());
+        this.pauseBtn.addEventListener('click', () => this.togglePause());
+        this.clearBtn.addEventListener('click', () => this.clearRecording());
+      }
+
+      async checkPermission() {
+        try {
+          const result = await navigator.permissions.query({ name: 'microphone' });
+          this.permissionEl.textContent = result.state.charAt(0).toUpperCase() + result.state.slice(1);
+
+          result.addEventListener('change', () => {
+            this.permissionEl.textContent = result.state.charAt(0).toUpperCase() + result.state.slice(1);
+          });
+        } catch (e) {
+          // Permissions API may not be available
+          this.permissionEl.textContent = 'Unknown';
+        }
+      }
+
+      getSupportedMimeType() {
+        const types = [
+          'audio/webm;codecs=opus',
+          'audio/webm',
+          'audio/ogg;codecs=opus',
+          'audio/mp4',
+          'audio/mp3'
+        ];
+
+        for (const type of types) {
+          if (MediaRecorder.isTypeSupported(type)) {
+            return type;
+          }
+        }
+        return 'audio/webm';
+      }
+
+      async startRecording() {
+        try {
+          this.hideError();
+          this.chunks = [];
+
+          // Get microphone access
+          this.stream = await navigator.mediaDevices.getUserMedia({
+            audio: {
+              echoCancellation: true,
+              noiseSuppression: true,
+              autoGainControl: true
+            }
+          });
+
+          this.permissionEl.textContent = 'Granted';
+
+          const mimeType = this.getSupportedMimeType();
+          this.formatEl.textContent = mimeType;
+
+          this.mediaRecorder = new MediaRecorder(this.stream, {
+            mimeType,
+            audioBitsPerSecond: 128000
+          });
+
+          this.mediaRecorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              this.chunks.push(event.data);
+            }
+          };
+
+          this.mediaRecorder.onstop = () => {
+            this.audioBlob = new Blob(this.chunks, { type: mimeType });
+            const audioUrl = URL.createObjectURL(this.audioBlob);
+
+            this.audioPlayer.src = audioUrl;
+            this.audioPlayer.style.display = 'block';
+
+            const size = (this.audioBlob.size / 1024).toFixed(2);
+            this.sizeEl.textContent = `${size} KB`;
+
+            clearInterval(this.durationInterval);
+            this.waveformEl.classList.remove('active');
+          };
+
+          this.mediaRecorder.start(100);
+          this.startTime = Date.now();
+
+          // Update UI
+          this.statusEl.textContent = 'Recording';
+          this.startBtn.disabled = true;
+          this.stopBtn.disabled = false;
+          this.pauseBtn.disabled = false;
+          this.clearBtn.disabled = true;
+          this.startBtn.classList.add('recording');
+          this.waveformEl.classList.add('active');
+
+          // Update duration
+          this.durationInterval = setInterval(() => {
+            this.duration = Math.floor((Date.now() - this.startTime) / 1000);
+            this.durationEl.textContent = this.duration;
+          }, 1000);
+
+        } catch (error) {
+          this.showError(error.message);
+          this.permissionEl.textContent = 'Denied';
+        }
+      }
+
+      stopRecording() {
+        if (this.mediaRecorder && this.mediaRecorder.state !== 'inactive') {
+          this.mediaRecorder.stop();
+          this.stream.getTracks().forEach(track => track.stop());
+
+          this.statusEl.textContent = 'Stopped';
+          this.startBtn.disabled = false;
+          this.stopBtn.disabled = true;
+          this.pauseBtn.disabled = true;
+          this.clearBtn.disabled = false;
+          this.startBtn.classList.remove('recording');
+        }
+      }
+
+      togglePause() {
+        if (this.mediaRecorder.state === 'recording') {
+          this.mediaRecorder.pause();
+          this.statusEl.textContent = 'Paused';
+          this.pauseBtn.textContent = '▶️ Resume';
+          this.waveformEl.classList.remove('active');
+        } else if (this.mediaRecorder.state === 'paused') {
+          this.mediaRecorder.resume();
+          this.statusEl.textContent = 'Recording';
+          this.pauseBtn.textContent = '⏸ Pause';
+          this.waveformEl.classList.add('active');
+        }
+      }
+
+      clearRecording() {
+        this.audioPlayer.style.display = 'none';
+        this.audioPlayer.src = '';
+        this.chunks = [];
+        this.audioBlob = null;
+        this.duration = 0;
+        this.durationEl.textContent = '0';
+        this.sizeEl.textContent = '-';
+        this.statusEl.textContent = 'Ready';
+        this.clearBtn.disabled = true;
+      }
+
+      showError(message) {
+        this.errorEl.textContent = `Error: ${message}`;
+        this.errorEl.style.display = 'block';
+      }
+
+      hideError() {
+        this.errorEl.style.display = 'none';
+      }
+    }
+
+    // Initialize recorder
+    const recorder = new AudioRecorder();
+
+    // Test MediaRecorder support
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      recorder.showError('MediaRecorder API is not supported in this browser');
+    }
+  </script>
+</body>
+</html>

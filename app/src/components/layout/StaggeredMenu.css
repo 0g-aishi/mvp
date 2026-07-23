@@ -1,0 +1,366 @@
+/* StaggeredMenu - Dark Theme Adaptation for Aishi App */
+
+.staggered-menu-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.staggered-menu-wrapper > * {
+  pointer-events: auto;
+}
+
+/* Header with logo and menu button */
+.staggered-menu-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  background: transparent;
+  pointer-events: none;
+  z-index: 41;
+}
+
+.staggered-menu-header > * {
+  pointer-events: auto;
+}
+
+/* Logo */
+.sm-logo {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+.sm-logo-img {
+  display: block;
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Menu Toggle Button */
+.sm-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  overflow: visible;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.sm-toggle:hover {
+  opacity: 0.8;
+}
+
+.sm-toggle:focus-visible {
+  outline: 2px solid #8B5CF6;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Toggle text animation */
+.sm-toggle-textWrap {
+  position: relative;
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  width: auto;
+  min-width: 45px;
+}
+
+.sm-toggle-textInner {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.sm-toggle-line {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+
+/* Plus/X icon */
+.sm-icon {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.sm-icon-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Prelayers - gradient background effect */
+.sm-prelayers {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(280px, 40vw, 450px);
+  pointer-events: none;
+  z-index: 35;
+}
+
+[data-position='left'] .sm-prelayers {
+  right: auto;
+  left: 0;
+}
+
+.sm-prelayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  transform: translateX(0);
+}
+
+/* Main Menu Panel - Dark Theme */
+.staggered-menu-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(260px, 38vw, 420px);
+  height: 100%;
+  background: #121218;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  padding: 5em 2em 2em 2em;
+  overflow-y: auto;
+  z-index: 40;
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.7);
+}
+
+[data-position='left'] .staggered-menu-panel {
+  right: auto;
+  left: 0;
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.7);
+}
+
+.sm-panel-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Wallet Section - TOP */
+.sm-wallet-section {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+}
+
+/* Navigation List */
+.sm-panel-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sm-panel-itemWrap {
+  position: relative;
+  overflow: hidden;
+  line-height: 1;
+}
+
+/* Menu Items - Dark Theme */
+.sm-panel-item {
+  position: relative;
+  color: #E6E6E6;
+  font-weight: 600;
+  font-size: 2.5rem;
+  cursor: pointer;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  transition: background 0.25s, color 0.25s;
+  display: inline-block;
+  text-decoration: none;
+  padding-right: 2em;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sm-panel-itemLabel {
+  display: inline-block;
+  will-change: transform;
+  transform-origin: 50% 100%;
+}
+
+/* Hover State - Violet */
+.sm-panel-item:hover {
+  color: var(--sm-accent, #8B5CF6);
+}
+
+/* Active State - Violet */
+.sm-panel-item-active {
+  color: var(--sm-accent, #8B5CF6) !important;
+}
+
+/* Footer - Powered by 0G Network */
+.sm-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sm-footer-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sm-footer-text {
+  font-size: 0.85rem;
+  color: #9999A5;
+  font-weight: 400;
+}
+
+.sm-footer-logo {
+  height: 20px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.8;
+}
+
+/* Responsive - Mobile */
+@media (max-width: 1024px) {
+  .staggered-menu-panel,
+  .sm-prelayers {
+    width: 85vw;
+    max-width: 100%;
+  }
+
+  .sm-panel-item {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .staggered-menu-panel,
+  .sm-prelayers {
+    width: 100%;
+  }
+
+  .sm-panel-item {
+    font-size: 1.75rem;
+  }
+
+  .sm-panel-list[data-numbering] .sm-panel-item::after {
+    font-size: 12px;
+    right: 1em;
+  }
+
+  .staggered-menu-header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .sm-logo-img {
+    height: 24px;
+  }
+}
+
+/* Numbering for menu items */
+.sm-panel-list[data-numbering] {
+  counter-reset: smItem;
+}
+
+.sm-panel-list[data-numbering] .sm-panel-item::after {
+  counter-increment: smItem;
+  content: counter(smItem, decimal-leading-zero);
+  position: absolute;
+  top: 0.15em;
+  right: 1.5em;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--sm-accent, #8B5CF6);
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--sm-num-opacity, 0);
+}
+
+/* Scrollbar styling for menu panel */
+.staggered-menu-panel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.staggered-menu-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.staggered-menu-panel::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 3px;
+}
+
+.staggered-menu-panel::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Overlay */
+.sm-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* When menu is open, invert logo color on mobile to black */
+@media (max-width: 1024px) {
+  .staggered-menu-wrapper[data-open] .sm-logo-img {
+    filter: invert(100%);
+  }
+}

@@ -1,0 +1,58 @@
+[
+    {
+      "month": 12,
+      "year": 2024,
+      "period": "December 2024",
+      "total_dreams": 28,
+      
+      // Dominujące wzorce
+      "dominant": {
+        "emotions": ["ciekawość", "lęk", "radość"],
+        "symbols": ["woda", "światło", "drogi"],
+        "themes": ["transformacja", "podróż", "relacje"],
+        "archetypes": ["hero", "shadow", "anima"]
+      },
+      
+      // Statystyki
+      "metrics": {
+        "avg_intensity": 6.8,
+        "avg_lucidity": 3.2,
+        "nightmare_ratio": 0.15,
+        "breakthrough_dreams": 3
+      },
+      
+      // Trendy
+      "trends": {
+        "emotional": "stabilizing",
+        "lucidity": "increasing",
+        "complexity": "deepening"
+      },
+      
+      // Ewolucja osobowości
+      "personality_evolution": {
+        "primary_growth": "intuition",
+        "secondary_growth": "empathy",
+        "total_shift": 12,
+        "new_features": ["dream_architect"]
+      },
+      
+      // Kluczowe odkrycia
+      "key_discoveries": [
+        "Woda przestała być zagrożeniem",
+        "Zwiększona kontrola w snach",
+        "Integracja cienia"
+      ],
+      
+      // Esencja miesiąca
+      "monthly_essence": "Grudzień był miesiącem głębokiej transformacji. Dominujący symbol wody ewoluował od lęku do akceptacji, odzwierciedlając emocjonalną integrację.",
+      
+      // Powiązania
+      "dream_connections": {
+        "recurring_chains": [[145, 151, 156]],
+        "theme_clusters": {
+          "water": [142, 145, 151, 156],
+          "transformation": [148, 156, 159]
+        }
+      }
+    }
+  ]

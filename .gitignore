@@ -1,0 +1,70 @@
+# Node modules
+node_modules/
+
+# Next.js build output
+.next/
+
+# Build directories
+build/
+dist/
+client/
+contracts/build/
+
+# Test coverage
+coverage/
+
+# Environment variables
+.env
+.env.*
+doors.md
+
+# Claude Code documentation
+CLAUDE.md
+AGENTS.md
+# Contract deployment files (contain sensitive info)
+contracts/frontend-contracts.json
+contracts/deployment-addresses.json
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# Parcel cache
+.parcel-cache/
+
+# Turbo repo
+.turbo/
+
+# ESLint cache
+.eslintcache
+
+# Vercel
+.vercel/
+
+# Webpack
+webpack/
+
+# Temp
+*.tmp
+temp/
+
+# Misc
+*.log
+
+# 0gdrive-main folder
+0gdrive-main/
+0g-storage/
+ffmpeg/ 
+# TypeScript incremental compilation cache
+tsconfig.tsbuildinfo
+
+DEPLOYMENT_GUIDE.md
+about.md

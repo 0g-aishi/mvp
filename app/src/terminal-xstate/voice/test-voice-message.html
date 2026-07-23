@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Message Component Test</title>
+  <style>
+    body {
+      font-family: -apple-system, system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: rgba(26, 26, 26, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+    }
+    h1 {
+      color: #8B5CF6;
+      margin-bottom: 30px;
+      font-size: 24px;
+    }
+    .messages-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .message-wrapper {
+      position: relative;
+      margin: 10px 0;
+    }
+
+    /* Voice Message Component Styles */
+    .voice-message {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      max-width: 320px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .voice-message.user {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      margin-left: auto;
+    }
+    .voice-message.ai {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-right: auto;
+    }
+    .voice-message:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+    }
+
+    .play-button {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+    .user .play-button {
+      background: #8B5CF6;
+    }
+    .ai .play-button {
+      background: #4B5563;
+    }
+    .play-button:hover {
+      transform: scale(1.1);
+    }
+    .play-button.playing {
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .waveform-container {
+      flex: 1;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .waveform-bar {
+      width: 2px;
+      border-radius: 1px;
+      transition: all 0.2s ease;
+    }
+    .user .waveform-bar {
+      background: rgba(139, 92, 246, 0.4);
+    }
+    .ai .waveform-bar {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .waveform-bar.active {
+      background: #8B5CF6;
+    }
+    .ai .waveform-bar.active {
+      background: #F0F0F0;
+    }
+
+    .time-display {
+      font-size: 12px;
+      font-family: 'SF Mono', 'Monaco', monospace;
+      min-width: 45px;
+      text-align: right;
+    }
+    .user .time-display {
+      color: #8B5CF6;
+    }
+    .ai .time-display {
+      color: #8A8A8A;
+    }
+
+    .sender-label {
+      position: absolute;
+      top: -18px;
+      font-size: 11px;
+      color: #8A8A8A;
+      font-family: monospace;
+    }
+    .user .sender-label {
+      right: 0;
+    }
+    .ai .sender-label {
+      left: 0;
+    }
+
+    /* Control Panel */
+    .controls {
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .control-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      align-items: center;
+    }
+    button {
+      background: #8B5CF6;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #7C3AED;
+      transform: translateY(-1px);
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    select {
+      background: #1A1A1A;
+      color: #F0F0F0;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .status {
+      font-size: 12px;
+      color: #8A8A8A;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎤 Voice Message Test</h1>
+
+    <div class="messages-container" id="messages">
+      <!-- Voice messages will be inserted here -->
+    </div>
+
+    <div class="controls">
+      <h3 style="color: #8B5CF6; margin-top: 0;">Test Controls</h3>
+
+      <div class="control-row">
+        <button id="addUserMessage">Add User Message</button>
+        <button id="addAIMessage">Add AI Message</button>
+      </div>
+
+      <div class="control-row">
+        <label style="font-size: 14px;">Duration (seconds):</label>
+        <select id="durationSelect">
+          <option value="3">3s</option>
+          <option value="5" selected>5s</option>
+          <option value="10">10s</option>
+          <option value="15">15s</option>
+        </select>
+      </div>
+
+      <div class="control-row">
+        <button id="clearMessages">Clear All</button>
+        <button id="simulateRecording">Simulate Recording</button>
+      </div>
+
+      <div class="status" id="status">Ready</div>
+    </div>
+  </div>
+
+  <script>
+    class VoiceMessageDemo {
+      constructor() {
+        this.messagesContainer = document.getElementById('messages');
+        this.statusEl = document.getElementById('status');
+        this.messages = [];
+        this.currentlyPlaying = null;
+
+        // Create sample audio (sine wave)
+        this.sampleAudioUrl = this.createSampleAudio();
+
+        this.initControls();
+      }
+
+      initControls() {
+        document.getElementById('addUserMessage').addEventListener('click', () => {
+          this.addMessage('user');
+        });
+
+        document.getElementById('addAIMessage').addEventListener('click', () => {
+          this.addMessage('ai');
+        });
+
+        document.getElementById('clearMessages').addEventListener('click', () => {
+          this.clearMessages();
+        });
+
+        document.getElementById('simulateRecording').addEventListener('click', () => {
+          this.simulateRecording();
+        });
+
+        // Add initial messages
+        setTimeout(() => {
+          this.addMessage('user');
+          setTimeout(() => {
+            this.addMessage('ai');
+          }, 500);
+        }, 500);
+      }
+
+      createSampleAudio() {
+        // Create a simple sine wave audio
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const sampleRate = audioContext.sampleRate;
+        const duration = 5; // 5 seconds
+        const buffer = audioContext.createBuffer(1, sampleRate * duration, sampleRate);
+        const channelData = buffer.getChannelData(0);
+
+        // Generate sine wave with varying frequency
+        for (let i = 0; i < channelData.length; i++) {
+          const t = i / sampleRate;
+          const frequency = 440 + Math.sin(t * 0.5) * 100; // Varying frequency
+          channelData[i] = Math.sin(2 * Math.PI * frequency * t) * 0.3;
+        }
+
+        // Convert to blob
+        const wavBlob = this.bufferToWave(buffer);
+        return URL.createObjectURL(wavBlob);
+      }
+
+      bufferToWave(buffer) {
+        const length = buffer.length * buffer.numberOfChannels * 2 + 44;
+        const arrayBuffer = new ArrayBuffer(length);
+        const view = new DataView(arrayBuffer);
+        const channels = [];
+        let offset = 0;
+        let pos = 0;
+
+        // Write WAV header
+        const setUint16 = (data) => {
+          view.setUint16(pos, data, true);
+          pos += 2;
+        };
+        const setUint32 = (data) => {
+          view.setUint32(pos, data, true);
+          pos += 4;
+        };
+
+        // RIFF identifier
+        setUint32(0x46464952);
+        setUint32(length - 8);
+        setUint32(0x45564157);
+
+        // Format chunk
+        setUint32(0x20746d66);
+        setUint32(16);
+        setUint16(1);
+        setUint16(buffer.numberOfChannels);
+        setUint32(buffer.sampleRate);
+        setUint32(buffer.sampleRate * 2 * buffer.numberOfChannels);
+        setUint16(buffer.numberOfChannels * 2);
+        setUint16(16);
+
+        // Data chunk
+        setUint32(0x61746164);
+        setUint32(length - pos - 4);
+
+        // Write audio data
+        const channelData = buffer.getChannelData(0);
+        let lng = channelData.length;
+        let index = 44;
+        let volume = 1;
+        for (let i = 0; i < lng; i++) {
+          view.setInt16(index, channelData[i] * (0x7FFF * volume), true);
+          index += 2;
+        }
+
+        return new Blob([arrayBuffer], { type: 'audio/wav' });
+      }
+
+      addMessage(type) {
+        const duration = parseInt(document.getElementById('durationSelect').value);
+        const messageId = `msg-${Date.now()}`;
+
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = 'message-wrapper';
+        messageWrapper.id = messageId;
+
+        const message = document.createElement('div');
+        message.className = `voice-message ${type}`;
+
+        // Sender label
+        const senderLabel = document.createElement('span');
+        senderLabel.className = 'sender-label';
+        senderLabel.textContent = type === 'user' ? 'You' : 'AI Assistant';
+        message.appendChild(senderLabel);
+
+        // Play button
+        const playButton = document.createElement('button');
+        playButton.className = 'play-button';
+        playButton.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
+        `;
+
+        // Waveform
+        const waveformContainer = document.createElement('div');
+        waveformContainer.className = 'waveform-container';
+
+        // Generate random waveform
+        const barCount = 30;
+        const bars = [];
+        for (let i = 0; i < barCount; i++) {
+          const bar = document.createElement('div');
+          bar.className = 'waveform-bar';
+          const height = Math.random() * 50 + 30; // 30-80%
+          bar.style.height = `${height}%`;
+          waveformContainer.appendChild(bar);
+          bars.push(bar);
+        }
+
+        // Time display
+        const timeDisplay = document.createElement('span');
+        timeDisplay.className = 'time-display';
+        timeDisplay.textContent = `0:${duration.toString().padStart(2, '0')}`;
+
+        // Audio element
+        const audio = new Audio(this.sampleAudioUrl);
+        audio.preload = 'metadata';
+
+        // Play/pause functionality
+        let isPlaying = false;
+        let progressInterval = null;
+
+        const togglePlay = () => {
+          if (isPlaying) {
+            audio.pause();
+            playButton.innerHTML = `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            `;
+            playButton.classList.remove('playing');
+            clearInterval(progressInterval);
+            isPlaying = false;
+
+            // Stop other messages
+            if (this.currentlyPlaying === messageId) {
+              this.currentlyPlaying = null;
+            }
+          } else {
+            // Stop other playing messages
+            if (this.currentlyPlaying) {
+              this.stopMessage(this.currentlyPlaying);
+            }
+
+            audio.play();
+            playButton.innerHTML = `
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            `;
+            playButton.classList.add('playing');
+            isPlaying = true;
+            this.currentlyPlaying = messageId;
+
+            // Update progress
+            progressInterval = setInterval(() => {
+              const progress = audio.currentTime / audio.duration;
+              const activeBars = Math.floor(progress * barCount);
+
+              bars.forEach((bar, index) => {
+                if (index < activeBars) {
+                  bar.classList.add('active');
+                } else {
+                  bar.classList.remove('active');
+                }
+              });
+
+              const currentSeconds = Math.floor(audio.currentTime);
+              const minutes = Math.floor(currentSeconds / 60);
+              const seconds = currentSeconds % 60;
+              timeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            }, 100);
+          }
+        };
+
+        playButton.addEventListener('click', togglePlay);
+        message.addEventListener('click', togglePlay);
+
+        audio.addEventListener('ended', () => {
+          playButton.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+          `;
+          playButton.classList.remove('playing');
+          bars.forEach(bar => bar.classList.remove('active'));
+          timeDisplay.textContent = `0:${duration.toString().padStart(2, '0')}`;
+          clearInterval(progressInterval);
+          isPlaying = false;
+          if (this.currentlyPlaying === messageId) {
+            this.currentlyPlaying = null;
+          }
+        });
+
+        // Assemble message
+        message.appendChild(playButton);
+        message.appendChild(waveformContainer);
+        message.appendChild(timeDisplay);
+
+        messageWrapper.appendChild(message);
+        this.messagesContainer.appendChild(messageWrapper);
+
+        // Store message data
+        this.messages.push({
+          id: messageId,
+          type,
+          audio,
+          playButton,
+          bars,
+          timeDisplay,
+          isPlaying
+        });
+
+        this.updateStatus(`Added ${type} message`);
+      }
+
+      stopMessage(messageId) {
+        const message = this.messages.find(m => m.id === messageId);
+        if (message && message.isPlaying) {
+          message.audio.pause();
+          message.audio.currentTime = 0;
+          message.playButton.click();
+        }
+      }
+
+      clearMessages() {
+        this.messages.forEach(msg => {
+          if (msg.audio) {
+            msg.audio.pause();
+          }
+        });
+        this.messages = [];
+        this.messagesContainer.innerHTML = '';
+        this.currentlyPlaying = null;
+        this.updateStatus('Cleared all messages');
+      }
+
+      simulateRecording() {
+        this.updateStatus('Simulating recording...');
+
+        const messageWrapper = document.createElement('div');
+        messageWrapper.className = 'message-wrapper';
+
+        const message = document.createElement('div');
+        message.className = 'voice-message user';
+        message.style.opacity = '0.7';
+
+        const recordingIndicator = document.createElement('div');
+        recordingIndicator.style.display = 'flex';
+        recordingIndicator.style.alignItems = 'center';
+        recordingIndicator.style.gap = '10px';
+        recordingIndicator.innerHTML = `
+          <div style="width: 12px; height: 12px; background: #EF4444; border-radius: 50%; animation: pulse 1s infinite;"></div>
+          <span style="font-size: 14px;">Recording...</span>
+        `;
+
+        message.appendChild(recordingIndicator);
+        messageWrapper.appendChild(message);
+        this.messagesContainer.appendChild(messageWrapper);
+
+        setTimeout(() => {
+          this.messagesContainer.removeChild(messageWrapper);
+          this.addMessage('user');
+          this.updateStatus('Recording complete');
+        }, 3000);
+      }
+
+      updateStatus(text) {
+        this.statusEl.textContent = text;
+        setTimeout(() => {
+          this.statusEl.textContent = 'Ready';
+        }, 2000);
+      }
+    }
+
+    // Initialize demo
+    new VoiceMessageDemo();
+  </script>
+</body>
+</html>
